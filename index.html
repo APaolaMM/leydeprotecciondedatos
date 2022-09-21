@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="stylesheet.css" />
+  <title>Términos y definiciones de ciberseguridad</title>
+
+</head>
+
+<body>
+	<div class="video">
+	<video controls autoplay width="640" height="480">
+		<source src="Módulo 1_ Ley de protección frente a los datos personales.mp4" type="video/mp4" />
+	</video>
+</div>
+    <div class="preguntasportema"> 
+<fieldset>
+	<legend>Cuestionario Ley de protección frente a los datos personales</legend>
+	<div id="test">
+		<div class="cuestion">1. ““Revelar informaci&otilde;n registrada en una base de datos personal cuyo secreto esté obligado a guardar conforme la ley.” Seg&utilde;n la Ley de Protecci&otilde;n de Datos, la anterior corresponde a una falta:
+        </div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="0" value="a">&nbsp;a : Leve.&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="b">&nbsp;b : Grav&itilde;sima&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="c">&nbsp;c : Grave.&nbsp;</label>
+		</div>
+		<div class="cuestion">2. Un artículo que habla sobre el manejo y transferencia de datos corresponde a: </div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="1" value="a">&nbsp;a :Art&itilde;culo 6.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="b">&nbsp;b : Art&itilde;culo 7.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="c">&nbsp;c : Art&itilde;culo 10.&nbsp;</label>
+		</div>
+		<div class="cuestion">3. Una falta grave corresponde a:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="2" value="a">&nbsp;a : Negarse injustificadamente a dar acceso a un interesado sobre los datos que consten en archivos y bases de datos, incluso eliminar o rectificar los datos.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="b">&nbsp;b : Recolectar datos personales para su uso en base de datos sin que se le otorgue suficiente y amplia informaci&otilde;n a la persona interesada.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="c">&nbsp;c : Obtener, de los titulares o de terceros, datos personales de una persona por medio de engaño, violencia o amenaza.&nbsp;</label>
+		</div>
+	</div>
+	<button id="boton">Mostrar resultado</button>
+	<div id="resultado">
+		<br>
+	</div>
+	<script>
+		const contenedor = document.getElementById("test");
+		const botonRes = document.getElementById("boton");
+		const resultadoTest = document.getElementById("resultado");
+
+		const preguntas = [
+			{
+				pregunta: "“Revelar información registrada en una base de datos personal cuyo secreto esté obligado a guardar conforme la ley.” Según la Ley de Protección de Datos, la anterior corresponde a una falta:",
+				respuestas:
+				{
+					a: "Leve",
+					b: "Gravísima.",
+					c: "Grave",
+				},
+				respuestaCorrecta: "b",
+			},
+			{
+				pregunta: "2. Un artículo que habla sobre el manejo y transferencia de datos corresponde a:",
+				respuestas:
+				{
+					a: "Artículo 6.",
+					b: "Artículo 7.",
+					c: "Artículo 10.",
+				},
+				respuestaCorrecta: "a",
+			},
+			{
+				pregunta: "3. Una falta grave corresponde a:",
+				respuestas:
+				{
+					a: "Negarse injustificadamente a dar acceso a un interesado sobre los datos que consten en archivos y bases de datos, incluso eliminar o rectificar los datos.",
+					b: "Recolectar datos personales para su uso en base de datos sin que se le otorgue suficiente y amplia información a la persona interesada.",
+					c: "Obtener, de los titulares o de terceros, datos personales de una persona por medio de engaño, violencia o amenaza.",
+				},
+				respuestaCorrecta: "a",
+			},
+
+		];
+
+		function mostrarTest()
+		{
+			const preguntasYrespuestas = [];
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+
+				const respuestas = [];
+
+				for (letraRespuesta in preguntaActual.respuestas)
+				{
+
+					respuestas.push(
+
+						`
+        <label>
+                  <input type="radio" name="${numeroDePregunta}" value="${letraRespuesta}" />
+                  ${letraRespuesta} : ${preguntaActual.respuestas[letraRespuesta]} <br>
+              </label>` 
+					);
+                   
+				}
+
+				preguntasYrespuestas.push(
+					`
+      <div class="cuestion">${preguntaActual.pregunta}</div>
+      
+          <div class="respuestas"> ${respuestas.join("")} </div>
+          `
+				);
+			});
+
+			contenedor.innerHTML = preguntasYrespuestas.join("");
+		}
+
+		mostrarTest();
+
+		function mostrarResultado()
+		{
+			const respuestas = contenedor.querySelectorAll(".respuestas");
+			let respuestasCorrectas = 0;
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+				const todasLasRespuestas = respuestas[numeroDePregunta];
+				const checkboxRespuestas = `input[name='${numeroDePregunta}']:checked`;
+				const respuestaElegida = (
+					todasLasRespuestas.querySelector(checkboxRespuestas) ||
+					{}
+				).value;
+
+				if (respuestaElegida === preguntaActual.respuestaCorrecta)
+				{
+					respuestasCorrectas++;
+
+					respuestas[numeroDePregunta].style.color = "blue";
+				}
+				else
+				{
+					respuestas[numeroDePregunta].style.color = "red";
+				}
+			});
+
+			resultadoTest.innerHTML =
+				"Usted ha acertado " +
+				respuestasCorrectas +
+				" preguntas de un total de " +
+				preguntas.length;
+		}
+
+		botonRes.addEventListener("click", mostrarResultado);
+
+	</script>
+       </div>
+
+</fieldset>
+</body>
+</html>
